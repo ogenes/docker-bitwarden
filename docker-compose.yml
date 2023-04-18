@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    privileged: true
+    ports:
+      - 80:80
+      - 443:443
+    restart: always
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d/:/etc/nginx/conf.d/:ro
+      - ./nginx/ssl/:/etc/nginx/ssl/:ro
+      - ${WEB_ROOT_PATH}:/var/www/
+      - ${NGINX_LOG_PATH}:/var/log/nginx/
+    networks:
+      backend:
+        ipv4_address: ${NGINX_IP}
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ${WEB_ROOT_PATH}/certbot/:/var/www/certbot/:rw
+      - ./nginx/ssl/:/etc/letsencrypt/:rw
+    networks:
+      backend:
+        ipv4_address: ${CERTBOT_IP}
+  bitwarden:
+    image: docker.io/vaultwarden/server:latest
+    container_name: bitwarden
+    restart: always
+    volumes:
+      - ./data/bitwarden:/data
+    ports:
+      - 1080:80
+    environment:
+      SIGNUPS_ALLOWED: 'true'
+      WBE_VAULT_ENABLE: 'true'
+    networks:
+      backend:
+        ipv4_address: ${BITWARDEN_IP}
+networks:
+  backend:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${SUBNET}
+

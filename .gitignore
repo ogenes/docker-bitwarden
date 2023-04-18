@@ -1,0 +1,6 @@
+.idea
+/logs
+/data
+.env
+
+.DS_Store
