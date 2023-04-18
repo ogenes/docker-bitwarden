@@ -1,4 +1,4 @@
-# docker部署开原密码管理器Bitwarden, 并申请免费ssl证书自动刷新永不过期
+# docker部署开源密码管理器Bitwarden, 并申请免费ssl证书自动刷新永不过期
 
 ### 下载并启动nginx
 ```shell
