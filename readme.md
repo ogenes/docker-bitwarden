@@ -1,4 +1,4 @@
-
+# docker部署Bitwarden, 并申请免费ssl证书自动刷新永不过期
 
 ### 下载并启动nginx
 ```shell
@@ -105,3 +105,11 @@ chrome://settings/passwords
 输入服务器url: https://bitwarden.example.com
 然后登录
 ![image-20230418201520303](https://img.ogenes.cn/img/2023/image-20230418201520303.png)
+
+
+### 自动刷新ssl证书
+```shell
+添加计划任务
+#更新https证书
+1 1 1 * * cd /data/docker-bitwarden && docker-compose run --rm certbot renew >> /dev/null 2>&1
+```
