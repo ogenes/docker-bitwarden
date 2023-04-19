@@ -17,6 +17,12 @@
 #将nginx配置文件中的域名替换成自己的域名
 [root@ogenes01 docker-bitwarden]# sed s/bitwarden.example.com/yourdomain/g nginx/conf.d/bitwarden.conf
 
+#创建网络，指定子网与.env中配置一致
+[root@ogenes01 docker-bitwarden]# docker network create backend --subnet=172.19.0.0/16
+18f511530214374896700ad3f179fb9180227fe4e5b6ccf7e9f8ed9b8602059c
+[root@ogenes01 docker-bitwarden]# docker network ls | grep backend
+18f511530214   backend   bridge    local
+
 #启动nginx
 [root@ogenes01 docker-bitwarden]# docker-composer up -d nginx
 
@@ -86,6 +92,14 @@ server {
 ### 登录，设置中文
 ![image-20230418200318902.png](https://img.ogenes.cn/img/2023/image-20230418200318902.png)
 
+### 更改配置，禁止注册，然后重启
+
+尝试注册时会报错：
+发生错误。
+Registration not allowed or user already exists
+
+![image-20230419150341237](https://img.ogenes.cn/img/2023/image-20230419150341237.png)
+
 ### 从chrome导出账号密码
 chrome://settings/passwords
 ![image-20230418200627552](https://img.ogenes.cn/img/2023/image-20230418200627552.png)
@@ -100,8 +114,6 @@ chrome://settings/passwords
 ![image-20230418195902674](https://img.ogenes.cn/img/2023/image-20230418195902674.png)
 
 ### 设置服务器url, 自动填充
-
-
 
 ![image-20230418200923646](https://img.ogenes.cn/img/2023/image-20230418200923646.png)
 

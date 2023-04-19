@@ -43,8 +43,5 @@ services:
         ipv4_address: ${BITWARDEN_IP}
 networks:
   backend:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: ${SUBNET}
+    external: false
 
