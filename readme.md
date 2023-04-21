@@ -93,6 +93,9 @@ server {
 ![image-20230418200318902.png](https://img.ogenes.cn/img/2023/image-20230418200318902.png)
 
 ### 更改配置，禁止注册，然后重启
+```shell
+SIGNUPS_ALLOWED: 'false'
+```
 
 尝试注册时会报错：
 发生错误。
